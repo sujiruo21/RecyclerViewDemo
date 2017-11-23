@@ -12,7 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.recyclerviewdemo.MyRecyclerAdapter.OnItemClickListener;
+import com.example.recyclerviewdemo.MyRecyclerAdapter.OnItemLongClickListener;
 
 public class MainActivity extends Activity {
 
@@ -41,11 +41,18 @@ public class MainActivity extends Activity {
 		// LinearLayoutManager.HORIZONTAL, true);
 		recyclerView.setLayoutManager(layout);
 		recyclerView.setAdapter(adapter);
-		adapter.setOnItemClickListener(new OnItemClickListener() {
+//		adapter.setOnItemClickListener(new OnItemClickListener() {
+//			
+//			@Override
+//			public void onItemClick(View v, int position) {
+//				Toast.makeText(MainActivity.this, "点击了" + position, Toast.LENGTH_SHORT).show();
+//			}
+//		});
+		adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
 			
 			@Override
-			public void onItemClick(View v, int position) {
-				Toast.makeText(MainActivity.this, "点击了" + position, Toast.LENGTH_SHORT).show();
+			public void onItemLongClick(View v, int position) {
+				Toast.makeText(MainActivity.this, "长按了" + position, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

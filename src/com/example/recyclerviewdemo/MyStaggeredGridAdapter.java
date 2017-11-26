@@ -42,6 +42,7 @@ public class MyStaggeredGridAdapter extends Adapter<MyStaggeredGridAdapter.MyVie
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int arg1) {
+		//inflate()
 		MyViewHolder viewHolder = new MyViewHolder(View.inflate(viewGroup.getContext(), R.layout.recyclerview_list, null));
 		return viewHolder;
 	}

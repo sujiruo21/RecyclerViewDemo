@@ -79,7 +79,6 @@ public class MyRecyclerAdapter extends Adapter<MyRecyclerAdapter.MyViewHolder> {
 		mOnItemLongClickListener = listener;
 	}
 
-	
 	class MyViewHolder extends RecyclerView.ViewHolder {
 
 		private TextView tv;

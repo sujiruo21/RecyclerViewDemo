@@ -20,8 +20,6 @@ public class MainActivity extends Activity {
 	private MyRecyclerAdapter adapter;
 	private ArrayList<String> list;
 
-	// private MyStaggeredGridAdapter adapter;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

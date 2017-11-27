@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,7 +53,9 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onItemLongClick(View v, int position) {
-				Toast.makeText(MainActivity.this, "长按了" + position, Toast.LENGTH_SHORT).show();
+				Toast toast = Toast.makeText(MainActivity.this, "长按了" + position, Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.TOP, 0, 80);
+				toast.show();
 			}
 		});
 	}

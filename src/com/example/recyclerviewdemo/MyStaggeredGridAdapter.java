@@ -59,3 +59,4 @@ public class MyStaggeredGridAdapter extends Adapter<MyStaggeredGridAdapter.MyVie
 	}
 
 }
+

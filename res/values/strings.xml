@@ -4,5 +4,9 @@
     <string name="app_name">RecyclerViewDemo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="change">点击切换</string>
+    <string name="add">添加</string>
+    <string name="edit">修改</string>
+    <string name="share">分享</string>
 
 </resources>

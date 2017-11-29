@@ -2,24 +2,29 @@ package com.example.recyclerviewdemo;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.recyclerviewdemo.MyRecyclerAdapter.OnItemLongClickListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 	private RecyclerView recyclerView;
 	private MyRecyclerAdapter adapter;
 	private ArrayList<String> list;
+	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +45,36 @@ public class MainActivity extends Activity {
 		// LinearLayoutManager.HORIZONTAL, true);
 		recyclerView.setLayoutManager(layout);
 		recyclerView.setAdapter(adapter);
-//		adapter.setOnItemClickListener(new OnItemClickListener() {
-//			
-//			@Override
-//			public void onItemClick(View v, int position) {
-//				Toast.makeText(MainActivity.this, "点击了" + position, Toast.LENGTH_SHORT).show();
-//			}
-//		});
+		// adapter.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(View v, int position) {
+		// Toast.makeText(MainActivity.this, "点击了" + position,
+		// Toast.LENGTH_SHORT).show();
+		// }
+		// });
 		adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
-			
+
 			@Override
 			public void onItemLongClick(View v, int position) {
-				Toast toast = Toast.makeText(MainActivity.this, "长按了" + position, Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(MainActivity.this, "长按了"
+						+ position, Toast.LENGTH_SHORT);
 				toast.setGravity(Gravity.TOP, 0, 80);
 				toast.show();
 			}
 		});
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle("RecyclerView");
+		toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+			@Override
+			public boolean onMenuItemClick(MenuItem arg0) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+		setSupportActionBar(toolbar);
+		toolbar.setNavigationIcon(R.drawable.abc_ic_menu_selectall_mtrl_alpha);
 	}
 
 	boolean isGrid = false;
@@ -68,8 +87,35 @@ public class MainActivity extends Activity {
 		}
 		isGrid = !isGrid;
 	}
-	
-	public void add(View v){
+
+	public void add(View v) {
 		adapter.addData(30);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_edit:
+			Toast.makeText(MainActivity.this, "edit", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case R.id.action_share:
+			Toast.makeText(MainActivity.this, "share", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case R.id.action_settings:
+			Toast.makeText(MainActivity.this, "settings", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
 }

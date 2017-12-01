@@ -29,15 +29,7 @@ public class MyRecyclerAdapter extends Adapter<MyRecyclerAdapter.MyViewHolder> {
 	public void onBindViewHolder(final MyViewHolder holder, final int position) {
 		holder.tv.setText(list.get(position));
 		if (mOnItemClickListener != null) {
-			holder.itemView.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// mOnItemClickListener.onItemClick(v, position);
-					mOnItemClickListener.onItemClick(v,
-							holder.getLayoutPosition());
-				}
-			});
+			holder.itemView.setOnClickListener(new MyOnClickListener(position));
 		}
 		if (mOnItemLongClickListener != null) {
 			holder.itemView.setOnLongClickListener(new OnLongClickListener() {
@@ -90,7 +82,20 @@ public class MyRecyclerAdapter extends Adapter<MyRecyclerAdapter.MyViewHolder> {
 
 	}
 
+	class MyOnClickListener implements OnClickListener {
+
+		private int position;
+
+		public MyOnClickListener(int position) {
+			super();
+			this.position = position;
+		}
+
+		@Override
+		public void onClick(View v) {
+			mOnItemClickListener.onItemClick(v, position);
+		}
+
+	}
+
 }
-
-
-

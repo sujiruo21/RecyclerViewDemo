@@ -11,13 +11,12 @@ import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.recyclerviewdemo.MyRecyclerAdapter.OnItemLongClickListener;
+import com.example.recyclerviewdemo.MyRecyclerAdapter.OnItemClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,31 +44,34 @@ public class MainActivity extends AppCompatActivity {
 		// LinearLayoutManager.HORIZONTAL, true);
 		recyclerView.setLayoutManager(layout);
 		recyclerView.setAdapter(adapter);
-		// adapter.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(View v, int position) {
-		// Toast.makeText(MainActivity.this, "点击了" + position,
-		// Toast.LENGTH_SHORT).show();
-		// }
-		// });
-		adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+		adapter.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemLongClick(View v, int position) {
-				Toast toast = Toast.makeText(MainActivity.this, "长按了"
-						+ position, Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.TOP, 0, 80);
-				toast.show();
+			public void onItemClick(View v, int position) {
+				Toast.makeText(MainActivity.this, "点击了" + position,
+						Toast.LENGTH_SHORT).show();
 			}
 		});
+		
+		recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+		
+		
+		// adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+		//
+		// @Override
+		// public void onItemLongClick(View v, int position) {
+		// Toast toast = Toast.makeText(MainActivity.this, "长按了"
+		// + position, Toast.LENGTH_SHORT);
+		// toast.setGravity(Gravity.TOP, 0, 80);
+		// toast.show();
+		// }
+		// });
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		toolbar.setTitle("RecyclerView");
 		toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
 			@Override
 			public boolean onMenuItemClick(MenuItem arg0) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		});

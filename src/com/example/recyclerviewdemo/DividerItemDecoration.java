@@ -1,5 +1,6 @@
 package com.example.recyclerviewdemo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -21,10 +22,12 @@ public class DividerItemDecoration extends ItemDecoration {
 
 	private int[] attrs = new int[] { android.R.attr.listDivider };
 
-	public DividerItemDecoration(Context context, int orientation) {
+	@SuppressLint("NewApi") public DividerItemDecoration(Context context, int orientation) {
+		//http://blog.csdn.net/jiangwei0910410003/article/details/17006087
 		TypedArray attr = context.obtainStyledAttributes(attrs);
 		mDrivider = attr.getDrawable(0);
 		attr.recycle();
+//		mDrivider = context.getResources().getDrawable(R.drawable.item_divider, null);
 		setOrientation(orientation);
 	}
 

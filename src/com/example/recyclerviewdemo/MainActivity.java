@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.view.Menu;
@@ -24,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 	private MyRecyclerAdapter adapter;
 	private ArrayList<String> list;
 	private Toolbar toolbar;
+	private GridDividerItemDecoration decor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
 		}
 		adapter = new MyRecyclerAdapter(list);
 		// adapter = new MyStaggeredGridAdapter(list);
-		// LayoutManager layout = new GridLayoutManager(this, 3);
-		LayoutManager layout = new StaggeredGridLayoutManager(3,
-				StaggeredGridLayoutManager.VERTICAL);
+		LayoutManager layout = new GridLayoutManager(this, 3);
+		// LayoutManager layout = new StaggeredGridLayoutManager(3,
+		// StaggeredGridLayoutManager.VERTICAL);
 		// LayoutManager layout = new LinearLayoutManager(MainActivity.this);
 		// LayoutManager layout = new LinearLayoutManager(MainActivity.this,
 		// LinearLayoutManager.HORIZONTAL, true);
@@ -52,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
-		
-		recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-		
-		
+		// decor = new DividerItemDecoration(this,
+		// LinearLayoutManager.HORIZONTAL);
+		decor = new GridDividerItemDecoration(this);
+		recyclerView.addItemDecoration(decor);
+
 		// adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
 		//
 		// @Override
@@ -82,10 +83,20 @@ public class MainActivity extends AppCompatActivity {
 	boolean isGrid = false;
 
 	public void change(View v) {
+		if (decor != null) {
+			recyclerView.removeItemDecoration(decor);
+		}
 		if (!isGrid) {
+			// decor = new DividerItemDecoration(this,
+			// LinearLayoutManager.VERTICAL);
 			recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+			// recyclerView.addItemDecoration(decor);
 		} else {
-			recyclerView.setLayoutManager(new LinearLayoutManager(this));
+			recyclerView.setLayoutManager(new LinearLayoutManager(
+					MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+			// decor = new DividerItemDecoration(this,
+			// LinearLayoutManager.HORIZONTAL);
+			// recyclerView.addItemDecoration(decor);
 		}
 		isGrid = !isGrid;
 	}

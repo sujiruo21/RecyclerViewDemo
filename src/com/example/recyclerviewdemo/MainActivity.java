@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		recyclerView = (RecyclerView) findViewById(R.id.rv);
 		list = new ArrayList<String>();
-		for (int i = 0; i < 60; i++) {
+		for (int i = 0; i < 59; i++) {
 			list.add("item " + i);
 		}
 		adapter = new MyRecyclerAdapter(list);

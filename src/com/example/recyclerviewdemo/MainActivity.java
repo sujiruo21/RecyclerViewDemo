@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.recyclerviewdemo.MyRecyclerAdapter.OnItemClickListener;
-
 public class MainActivity extends AppCompatActivity {
 
 	private RecyclerView recyclerView;
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 		adapter = new MyRecyclerAdapter(list);
 		// adapter = new MyStaggeredGridAdapter(list);
-		LayoutManager layout = new GridLayoutManager(this, 3);
+		LayoutManager layout = new GridLayoutManager(this, 5);
 		// LayoutManager layout = new StaggeredGridLayoutManager(3,
 		// StaggeredGridLayoutManager.VERTICAL);
 		// LayoutManager layout = new LinearLayoutManager(MainActivity.this);
@@ -44,14 +42,14 @@ public class MainActivity extends AppCompatActivity {
 		// LinearLayoutManager.HORIZONTAL, true);
 		recyclerView.setLayoutManager(layout);
 		recyclerView.setAdapter(adapter);
-		adapter.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(View v, int position) {
-				Toast.makeText(MainActivity.this, "点击了" + position,
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+		// adapter.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(View v, int position) {
+		// Toast.makeText(MainActivity.this, "点击了" + position,
+		// Toast.LENGTH_SHORT).show();
+		// }
+		// });
 		// decor = new DividerItemDecoration(this,
 		// LinearLayoutManager.HORIZONTAL);
 		decor = new GridDividerItemDecoration(this);
@@ -101,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
 		isGrid = !isGrid;
 	}
 
-	public void add(View v) {
-		adapter.addData(30);
-	}
+	// public void add(View v) {
+	// adapter.addData(30);
+	// }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

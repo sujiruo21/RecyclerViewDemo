@@ -1,5 +1,7 @@
 package com.example.recyclerviewdemo;
 
+import java.lang.reflect.Field;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,7 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.support.v7.widget.RecyclerView.State;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.Toast;
 
 public class DividerItemDecoration extends ItemDecoration {
 
@@ -22,12 +26,15 @@ public class DividerItemDecoration extends ItemDecoration {
 
 	private int[] attrs = new int[] { android.R.attr.listDivider };
 
-	@SuppressLint("NewApi") public DividerItemDecoration(Context context, int orientation) {
-		//http://blog.csdn.net/jiangwei0910410003/article/details/17006087
+	@SuppressLint("NewApi")
+	public DividerItemDecoration(Context context, int orientation) {
+		// http://blog.csdn.net/jiangwei0910410003/article/details/17006087
 		TypedArray attr = context.obtainStyledAttributes(attrs);
 		mDrivider = attr.getDrawable(0);
 		attr.recycle();
-//		mDrivider = context.getResources().getDrawable(R.drawable.item_divider, null);
+
+		// mDrivider =
+		// context.getResources().getDrawable(R.drawable.item_divider, null);
 		setOrientation(orientation);
 	}
 
@@ -41,10 +48,10 @@ public class DividerItemDecoration extends ItemDecoration {
 
 	@Override
 	public void onDraw(Canvas c, RecyclerView parent, State state) {
-		if(orientation == LinearLayoutManager.VERTICAL){
-			drawVerticalDrivider(c,parent);
-		}else{
-			drawHorizontalDrivider(c,parent);
+		if (orientation == LinearLayoutManager.VERTICAL) {
+			drawVerticalDrivider(c, parent);
+		} else {
+			drawHorizontalDrivider(c, parent);
 		}
 		super.onDraw(c, parent, state);
 	}
@@ -53,10 +60,11 @@ public class DividerItemDecoration extends ItemDecoration {
 		int top = parent.getPaddingTop();
 		int bottom = parent.getHeight() - parent.getPaddingBottom();
 		int childCount = parent.getChildCount();
-		for(int i = 0;i < childCount; i++){
+		for (int i = 0; i < childCount; i++) {
 			View child = parent.getChildAt(i);
 			LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
-			int left = child.getLeft() + layoutParams.leftMargin + Math.round(ViewCompat.getTranslationX(child));
+			int left = child.getLeft() + layoutParams.leftMargin
+					+ Math.round(ViewCompat.getTranslationX(child));
 			int right = left + mDrivider.getIntrinsicWidth();
 			mDrivider.setBounds(left, top, right, bottom);
 			mDrivider.draw(c);
@@ -67,10 +75,11 @@ public class DividerItemDecoration extends ItemDecoration {
 		int left = parent.getPaddingLeft();
 		int right = parent.getWidth() - parent.getPaddingRight();
 		int childCount = parent.getChildCount();
-		for(int i = 0;i < childCount; i++){
+		for (int i = 0; i < childCount; i++) {
 			View child = parent.getChildAt(i);
 			LayoutParams layoutParams = (LayoutParams) child.getLayoutParams();
-			int top = child.getBottom() + layoutParams.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
+			int top = child.getBottom() + layoutParams.bottomMargin
+					+ Math.round(ViewCompat.getTranslationY(child));
 			int bottom = top + mDrivider.getIntrinsicHeight();
 			mDrivider.setBounds(left, top, right, bottom);
 			mDrivider.draw(c);

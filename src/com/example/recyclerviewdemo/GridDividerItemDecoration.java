@@ -18,6 +18,9 @@ public class GridDividerItemDecoration extends ItemDecoration {
 
 	private int[] attrs = new int[] { android.R.attr.listDivider };
 	private Drawable mDivider;
+	private int itemPosition;
+	private int spanCount;
+	private int childCount;
 
 	public GridDividerItemDecoration(Context context) {
 		TypedArray attr = context.obtainStyledAttributes(attrs);
@@ -34,22 +37,23 @@ public class GridDividerItemDecoration extends ItemDecoration {
 	private void drawHorzontal(Canvas c, RecyclerView parent) {
 		int childCount = parent.getChildCount();
 		for (int i = 0; i < childCount; i++) {
-			View child = parent.getChildAt(i);
-			LayoutParams params = (LayoutParams) child.getLayoutParams();
-			int left = child.getLeft() - params.leftMargin;
-			int top = child.getBottom() + params.bottomMargin;
-			int right = child.getRight() + params.rightMargin
-					+ mDivider.getIntrinsicWidth();
-			int bottom = top + mDivider.getIntrinsicHeight();
-			mDivider.setBounds(left, top, right, bottom);
-			mDivider.draw(c);
+			if (i < (childCount - childCount % spanCount)) {
+				View child = parent.getChildAt(i);
+				LayoutParams params = (LayoutParams) child.getLayoutParams();
+				int left = child.getLeft() - params.leftMargin;
+				int top = child.getBottom() + params.bottomMargin;
+				int right = child.getRight() + params.rightMargin
+						+ mDivider.getIntrinsicWidth();
+				int bottom = top + mDivider.getIntrinsicHeight();
+				mDivider.setBounds(left, top, right, bottom);
+				mDivider.draw(c);
+			}
 		}
 	}
 
 	private void drawVertical(Canvas c, RecyclerView parent) {
 		int childCount = parent.getChildCount();
 		for (int i = 0; i < childCount; i++) {
-			// if (i % 3 != 2) {
 			View child = parent.getChildAt(i);
 			LayoutParams params = (LayoutParams) child.getLayoutParams();
 			int left = child.getRight() + params.rightMargin;
@@ -58,7 +62,6 @@ public class GridDividerItemDecoration extends ItemDecoration {
 			int bottom = child.getBottom() + params.bottomMargin;
 			mDivider.setBounds(left, top, right, bottom);
 			mDivider.draw(c);
-			// }
 		}
 	}
 
@@ -67,30 +70,34 @@ public class GridDividerItemDecoration extends ItemDecoration {
 			State state) {
 		int right = mDivider.getIntrinsicWidth();
 		int bottom = mDivider.getIntrinsicHeight();
-		if (isLastRow(parent)) {
+		itemPosition = ((RecyclerView.LayoutParams) view.getLayoutParams())
+				.getViewLayoutPosition();
+		spanCount = getSpanCount(parent);
+		childCount = parent.getAdapter().getItemCount();
+		if (isLastRow(parent, itemPosition, spanCount, childCount)) {
 			bottom = 0;
-		} else if (isLastCol(parent)) {
+		} else if (isLastCol(parent, itemPosition, spanCount)) {
 			right = 0;
 		}
 		outRect.set(0, 0, right, bottom);
 	}
 
-	private boolean isLastCol(RecyclerView parent) {
-		int spanCount = getSpanCount(parent);
-		int childCount = parent.getAdapter().getItemCount();
-		if (childCount % spanCount == 0) {
-			return true;
+	private boolean isLastCol(RecyclerView parent, int position, int spanCount) {
+		LayoutManager layoutManager = parent.getLayoutManager();
+		if (layoutManager instanceof GridLayoutManager) {
+			if ((position + 1) % spanCount == 0) {
+				return true;
+			}
 		}
 		return false;
 	}
 
-	private boolean isLastRow(RecyclerView parent) {
+	private boolean isLastRow(RecyclerView parent, int position, int spanCount,
+			int childCount) {
 		LayoutManager layoutManager = parent.getLayoutManager();
 		if (layoutManager instanceof GridLayoutManager) {
-			int spanCount = getSpanCount(parent);
-			int childCount = parent.getAdapter().getItemCount();
-			int lastRow = childCount % spanCount;
-			if (lastRow == 0 || lastRow < spanCount) {
+			int lastRowPos = childCount - childCount % spanCount;
+			if (position >= lastRowPos) {
 				return true;
 			}
 		}
